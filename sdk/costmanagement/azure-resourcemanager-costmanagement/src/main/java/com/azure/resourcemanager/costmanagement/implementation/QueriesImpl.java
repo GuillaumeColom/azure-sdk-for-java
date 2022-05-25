@@ -29,8 +29,8 @@ public final class QueriesImpl implements Queries {
         this.serviceManager = serviceManager;
     }
 
-    public QueryResult usage(String scope, QueryDefinition parameters) {
-        QueryResultInner inner = this.serviceClient().usage(scope, parameters);
+    public QueryResult usage(String scope, String skipToken, QueryDefinition parameters) {
+        QueryResultInner inner = this.serviceClient().usage(scope, skipToken, parameters);
         if (inner != null) {
             return new QueryResultImpl(inner, this.manager());
         } else {
@@ -38,8 +38,8 @@ public final class QueriesImpl implements Queries {
         }
     }
 
-    public Response<QueryResult> usageWithResponse(String scope, QueryDefinition parameters, Context context) {
-        Response<QueryResultInner> inner = this.serviceClient().usageWithResponse(scope, parameters, context);
+    public Response<QueryResult> usageWithResponse(String scope, String skipToken, QueryDefinition parameters, Context context) {
+        Response<QueryResultInner> inner = this.serviceClient().usageWithResponse(scope, skipToken, parameters, context);
         if (inner != null) {
             return new SimpleResponse<>(
                 inner.getRequest(),

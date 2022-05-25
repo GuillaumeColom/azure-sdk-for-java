@@ -39,7 +39,7 @@ public interface QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    QueryResultInner usage(String scope, QueryDefinition parameters);
+    QueryResultInner usage(String scope, String skipToken, QueryDefinition parameters);
 
     /**
      * Query the usage data for scope defined.
@@ -67,7 +67,7 @@ public interface QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    Response<QueryResultInner> usageWithResponse(String scope, QueryDefinition parameters, Context context);
+    Response<QueryResultInner> usageWithResponse(String scope, String skipToken, QueryDefinition parameters, Context context);
 
     /**
      * Query the usage data for external cloud provider type defined.

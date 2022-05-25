@@ -33,7 +33,7 @@ public interface Queries {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return result of query.
      */
-    QueryResult usage(String scope, QueryDefinition parameters);
+    QueryResult usage(String scope, String skipToken, QueryDefinition parameters);
 
     /**
      * Query the usage data for scope defined.
@@ -60,7 +60,7 @@ public interface Queries {
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return result of query.
      */
-    Response<QueryResult> usageWithResponse(String scope, QueryDefinition parameters, Context context);
+    Response<QueryResult> usageWithResponse(String scope, String skipToken, QueryDefinition parameters, Context context);
 
     /**
      * Query the usage data for external cloud provider type defined.

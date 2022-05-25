@@ -64,6 +64,7 @@ public final class QueriesClientImpl implements QueriesClient {
             @HostParam("$host") String endpoint,
             @PathParam(value = "scope", encoded = true) String scope,
             @QueryParam("api-version") String apiVersion,
+            @QueryParam("$skiptoken") String skiptoken,
             @BodyParam("application/json") QueryDefinition parameters,
             @HeaderParam("Accept") String accept,
             Context context);
@@ -107,7 +108,7 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    private Mono<Response<QueryResultInner>> usageWithResponseAsync(String scope, QueryDefinition parameters) {
+    private Mono<Response<QueryResultInner>> usageWithResponseAsync(String scope, String skipToken, QueryDefinition parameters) {
         if (this.client.getEndpoint() == null) {
             return Mono
                 .error(
@@ -128,7 +129,7 @@ public final class QueriesClientImpl implements QueriesClient {
                 context ->
                     service
                         .usage(
-                            this.client.getEndpoint(), scope, this.client.getApiVersion(), parameters, accept, context))
+                            this.client.getEndpoint(), scope, this.client.getApiVersion(), skipToken, parameters, accept, context))
             .contextWrite(context -> context.putAll(FluxUtil.toReactorContext(this.client.getContext()).readOnly()));
     }
 
@@ -159,7 +160,7 @@ public final class QueriesClientImpl implements QueriesClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     private Mono<Response<QueryResultInner>> usageWithResponseAsync(
-        String scope, QueryDefinition parameters, Context context) {
+        String scope, String skipToken, QueryDefinition parameters, Context context) {
         if (this.client.getEndpoint() == null) {
             return Mono
                 .error(
@@ -177,7 +178,7 @@ public final class QueriesClientImpl implements QueriesClient {
         final String accept = "application/json";
         context = this.client.mergeContext(context);
         return service
-            .usage(this.client.getEndpoint(), scope, this.client.getApiVersion(), parameters, accept, context);
+            .usage(this.client.getEndpoint(), scope, this.client.getApiVersion(), skipToken, parameters, accept, context);
     }
 
     /**
@@ -205,8 +206,8 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    private Mono<QueryResultInner> usageAsync(String scope, QueryDefinition parameters) {
-        return usageWithResponseAsync(scope, parameters)
+    private Mono<QueryResultInner> usageAsync(String scope, String skipToken, QueryDefinition parameters) {
+        return usageWithResponseAsync(scope, skipToken, parameters)
             .flatMap(
                 (Response<QueryResultInner> res) -> {
                     if (res.getValue() != null) {
@@ -242,8 +243,8 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public QueryResultInner usage(String scope, QueryDefinition parameters) {
-        return usageAsync(scope, parameters).block();
+    public QueryResultInner usage(String scope, String skipToken, QueryDefinition parameters) {
+        return usageAsync(scope, skipToken, parameters).block();
     }
 
     /**
@@ -272,8 +273,8 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<QueryResultInner> usageWithResponse(String scope, QueryDefinition parameters, Context context) {
-        return usageWithResponseAsync(scope, parameters, context).block();
+    public Response<QueryResultInner> usageWithResponse(String scope, String skipToken, QueryDefinition parameters, Context context) {
+        return usageWithResponseAsync(scope, skipToken, parameters, context).block();
     }
 
     /**
