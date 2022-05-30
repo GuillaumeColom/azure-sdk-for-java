@@ -112,7 +112,7 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    private Mono<Response<QueryResultInner>> usageWithResponseAsync(String scope, String skipToken, QueryDefinition parameters) {
+    private Mono<Response<QueryResultInner>> usageWithResponseAsync(String scope, String skiptoken, QueryDefinition parameters) {
         if (this.client.getEndpoint() == null) {
             return Mono
                 .error(
@@ -133,7 +133,7 @@ public final class QueriesClientImpl implements QueriesClient {
                 context ->
                     service
                         .usage(
-                            this.client.getEndpoint(), scope, this.client.getApiVersion(), skipToken, parameters, accept, context))
+                            this.client.getEndpoint(), scope, this.client.getApiVersion(), skiptoken, parameters, accept, context))
             .contextWrite(context -> context.putAll(FluxUtil.toReactorContext(this.client.getContext()).readOnly()));
     }
 
@@ -167,7 +167,7 @@ public final class QueriesClientImpl implements QueriesClient {
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     private Mono<Response<QueryResultInner>> usageWithResponseAsync(
-        String scope, String skipToken, QueryDefinition parameters, Context context) {
+        String scope, String skiptoken, QueryDefinition parameters, Context context) {
         if (this.client.getEndpoint() == null) {
             return Mono
                 .error(
@@ -185,7 +185,7 @@ public final class QueriesClientImpl implements QueriesClient {
         final String accept = "application/json";
         context = this.client.mergeContext(context);
         return service
-            .usage(this.client.getEndpoint(), scope, this.client.getApiVersion(), skipToken, parameters, accept, context);
+            .usage(this.client.getEndpoint(), scope, this.client.getApiVersion(), skiptoken, parameters, accept, context);
     }
 
     /**
@@ -216,8 +216,8 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    private Mono<QueryResultInner> usageAsync(String scope, String skipToken, QueryDefinition parameters) {
-        return usageWithResponseAsync(scope, skipToken, parameters)
+    private Mono<QueryResultInner> usageAsync(String scope, String skiptoken, QueryDefinition parameters) {
+        return usageWithResponseAsync(scope, skiptoken, parameters)
             .flatMap(
                 (Response<QueryResultInner> res) -> {
                     if (res.getValue() != null) {
@@ -256,8 +256,8 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public QueryResultInner usage(String scope, String skipToken, QueryDefinition parameters) {
-        return usageAsync(scope, skipToken, parameters).block();
+    public QueryResultInner usage(String scope, String skiptoken, QueryDefinition parameters) {
+        return usageAsync(scope, skiptoken, parameters).block();
     }
 
     /**
@@ -289,8 +289,8 @@ public final class QueriesClientImpl implements QueriesClient {
      * @return result of query.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
-    public Response<QueryResultInner> usageWithResponse(String scope, String skipToken, QueryDefinition parameters, Context context) {
-        return usageWithResponseAsync(scope, skipToken, parameters, context).block();
+    public Response<QueryResultInner> usageWithResponse(String scope, String skiptoken, QueryDefinition parameters, Context context) {
+        return usageWithResponseAsync(scope, skiptoken, parameters, context).block();
     }
 
     /**
@@ -314,7 +314,7 @@ public final class QueriesClientImpl implements QueriesClient {
     private Mono<Response<QueryResultInner>> usageByExternalCloudProviderTypeWithResponseAsync(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
-        String skipToken,
+        String skiptoken,
         QueryDefinition parameters) {
         if (this.client.getEndpoint() == null) {
             return Mono
@@ -347,7 +347,7 @@ public final class QueriesClientImpl implements QueriesClient {
                             this.client.getEndpoint(),
                             externalCloudProviderType,
                             externalCloudProviderId,
-                            skipToken,
+                            skiptoken,
                             this.client.getApiVersion(),
                             parameters,
                             accept,
@@ -377,7 +377,7 @@ public final class QueriesClientImpl implements QueriesClient {
     private Mono<Response<QueryResultInner>> usageByExternalCloudProviderTypeWithResponseAsync(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
-        String skipToken,
+        String skiptoken,
         QueryDefinition parameters,
         Context context) {
         if (this.client.getEndpoint() == null) {
@@ -409,7 +409,7 @@ public final class QueriesClientImpl implements QueriesClient {
                 this.client.getEndpoint(),
                 externalCloudProviderType,
                 externalCloudProviderId,
-                skipToken,
+                skiptoken,
                 this.client.getApiVersion(),
                 parameters,
                 accept,
@@ -437,10 +437,10 @@ public final class QueriesClientImpl implements QueriesClient {
     private Mono<QueryResultInner> usageByExternalCloudProviderTypeAsync(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
-        String skipToken,
+        String skiptoken,
         QueryDefinition parameters) {
         return usageByExternalCloudProviderTypeWithResponseAsync(
-                externalCloudProviderType, externalCloudProviderId, skipToken, parameters)
+                externalCloudProviderType, externalCloudProviderId, skiptoken, parameters)
             .flatMap(
                 (Response<QueryResultInner> res) -> {
                     if (res.getValue() != null) {
@@ -472,9 +472,9 @@ public final class QueriesClientImpl implements QueriesClient {
     public QueryResultInner usageByExternalCloudProviderType(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
-        String skipToken,
+        String skiptoken,
         QueryDefinition parameters) {
-        return usageByExternalCloudProviderTypeAsync(externalCloudProviderType, externalCloudProviderId, skipToken, parameters)
+        return usageByExternalCloudProviderTypeAsync(externalCloudProviderType, externalCloudProviderId, skiptoken, parameters)
             .block();
     }
 
@@ -500,11 +500,11 @@ public final class QueriesClientImpl implements QueriesClient {
     public Response<QueryResultInner> usageByExternalCloudProviderTypeWithResponse(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
-        String skipToken,
+        String skiptoken,
         QueryDefinition parameters,
         Context context) {
         return usageByExternalCloudProviderTypeWithResponseAsync(
-                externalCloudProviderType, externalCloudProviderId, skipToken, parameters, context)
+                externalCloudProviderType, externalCloudProviderId, skiptoken, parameters, context)
             .block();
     }
 }
