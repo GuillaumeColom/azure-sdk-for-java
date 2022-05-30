@@ -54,11 +54,12 @@ public final class QueriesImpl implements Queries {
     public QueryResult usageByExternalCloudProviderType(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
+        String skipToken,
         QueryDefinition parameters) {
         QueryResultInner inner =
             this
                 .serviceClient()
-                .usageByExternalCloudProviderType(externalCloudProviderType, externalCloudProviderId, parameters);
+                .usageByExternalCloudProviderType(externalCloudProviderType, externalCloudProviderId, skipToken, parameters);
         if (inner != null) {
             return new QueryResultImpl(inner, this.manager());
         } else {
@@ -69,13 +70,14 @@ public final class QueriesImpl implements Queries {
     public Response<QueryResult> usageByExternalCloudProviderTypeWithResponse(
         ExternalCloudProviderType externalCloudProviderType,
         String externalCloudProviderId,
+        String skipToken,
         QueryDefinition parameters,
         Context context) {
         Response<QueryResultInner> inner =
             this
                 .serviceClient()
                 .usageByExternalCloudProviderTypeWithResponse(
-                    externalCloudProviderType, externalCloudProviderId, parameters, context);
+                    externalCloudProviderType, externalCloudProviderId, skipToken, parameters, context);
         if (inner != null) {
             return new SimpleResponse<>(
                 inner.getRequest(),
